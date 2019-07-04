@@ -32,7 +32,7 @@ namespace ImageToURI
             Process.Start(filePath);
         }
 
-        private string[] DeleteMetaInFile(string fileFullName)
+        private void DeleteMetaInFile(string fileFullName)
         {
             string[] text = File.ReadAllLines(fileFullName);
 
@@ -43,11 +43,11 @@ namespace ImageToURI
             {
                 if (regex.IsMatch(text[i]))
                 {
-                    text[i] = Regex.Replace(text[i], pattern, "");
+                    text[i] = "";
                 }
-            }            
-
-            return text;
+            }
+            
+            File.WriteAllLines(fileFullName, text);
         }
 
         private void TransformToURL()
@@ -176,9 +176,11 @@ namespace ImageToURI
                 foreach (var file in files)
                 {
                     filePath = file.FullName;
-                    DeleteMetaInFile(filePath);
+                    //DeleteMetaInFile(filePath);
+                    EncodeToUTF8(filePath, GetEncodingByName("UTF-8 с BOM"));
                 }
-                                       
+                
+                // Преобразовать в URI и открыть преобразованный файл
                 if (directory.GetDirectories().Length != 0)
                 {
                     TransformToURL();
@@ -191,6 +193,39 @@ namespace ImageToURI
             }
         }
 
+        static string[] encodingNames = new string[]
+{
+            "UTF-8 без BOM",
+            "UTF-8 с BOM",
+            "UTF-16 LE",
+            "UTF-16 BE",
+            "UTF-32 LE",
+            "UTF-32 BE",
+            "CP1251",
+            "KOI8-R",
+            "KOI8-U"
+};
+
+        static Encoding[] encodings = new Encoding[]
+        {
+            new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true),
+            Encoding.UTF8,
+            Encoding.Unicode,
+            Encoding.BigEndianUnicode,
+            Encoding.UTF32,
+            new UTF32Encoding(true, true),
+            Encoding.GetEncoding(1251, new EncoderReplacementFallback("?"), new DecoderReplacementFallback("?")),
+            Encoding.GetEncoding(20866, new EncoderReplacementFallback("?"), new DecoderReplacementFallback("?")),
+            Encoding.GetEncoding(21866, new EncoderReplacementFallback("?"), new DecoderReplacementFallback("?"))
+        };
+
+        private Encoding GetEncodingByName(string name)
+        {
+            for (int i = 0; i < encodings.Length; i++)
+                if (encodingNames[i] == name) return encodings[i];
+            return null;
+        }
+
         private void Btn_Select_Root_Folder_Click(object sender, EventArgs e)
         {
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
@@ -201,6 +236,26 @@ namespace ImageToURI
                 rootFolderPath = dialog.SelectedPath;
             }
         }
+
+
+
+        private void EncodeToUTF8(string file, Encoding newEncoding)
+        {           
+                string oldEncodingName = "";
+                string result = "ОК";
+            try
+            {
+                Program.ProcessFile(file, ref oldEncodingName, newEncoding);
+                if (newEncoding == null) result = "";
+                else if (oldEncodingName == null) result = "Пропущен";
+            }
+            catch (IOException) { result = "Ошибка доступа"; }
+            catch (UnauthorizedAccessException) { result = "Ошибка доступа"; }
+
+        }
+
+
+        
     }
 
 }
