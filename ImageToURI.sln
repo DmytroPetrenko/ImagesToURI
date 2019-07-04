@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageToURI", "ImageToURI\ImageToURI.csproj", "{CEF331B9-535B-402B-9868-8F6B4BFD9FEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CEF331B9-535B-402B-9868-8F6B4BFD9FEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEF331B9-535B-402B-9868-8F6B4BFD9FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEF331B9-535B-402B-9868-8F6B4BFD9FEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEF331B9-535B-402B-9868-8F6B4BFD9FEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F50E2013-0BAC-4812-9E3F-C73E873ED4D9}
+	EndGlobalSection
+EndGlobal
