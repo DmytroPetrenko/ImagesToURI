@@ -188,7 +188,6 @@ namespace ImageToURI
                         Process.Start(filePath);
                     }
                 }
-                }
             }
         }
 
