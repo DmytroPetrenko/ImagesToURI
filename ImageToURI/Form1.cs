@@ -175,14 +175,14 @@ namespace ImageToURI
                 var files = directory.GetFiles();
                 foreach (var file in files)
                 {
-                    filePath = file.FullName;
-                    //DeleteMetaInFile(filePath);
+                    filePath = file.FullName;                    
                     EncodeToUTF8(filePath, GetEncodingByName("UTF-8 с BOM"));
                 }
                 
                 // Преобразовать в URI и открыть преобразованный файл
                 if (directory.GetDirectories().Length != 0)
                 {
+                    DeleteMetaInFile(filePath);
                     TransformToURL();
 
                     if (checkExtension == true)
